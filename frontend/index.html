@@ -4,27 +4,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Homebanking</title>
     <link rel="stylesheet" href="./styles.css">
     <script src="./scripts.js"></script>
 </head>
 
 <body>
+    <h1>socioS Bank</h1>
     <div class="formularios">
         <div class="formulario Registro">
             <h5>Usted es nuevito? </h5>
             <h2>Regístrese maestro!</h2>
             <form id="formularioRegistro">
                 <label for="nombre">Nombre:</label>
-                <input type="text" name="nombre" id="nombre">
+                <input type="text" name="nombre" id="nombre" required>
                 <label for="apellido">Apellido:</label>
-                <input type="text" name="apellido" id="apellido">
+                <input type="text" name="apellido" id="apellido" required>
                 <label for="usuario">Usuario:</label>
-                <input type="text" name="usuario" id="usuarioRegistro">
+                <input type="text" name="usuario" id="usuarioRegistro" required>
                 <label for="password">Password:</label>
-                <input type="password" name="password" id="passwordRegistro">
+                <input type="password" name="password" id="passwordRegistro" required>
                 <input type="submit" value="Enviar">
             </form>
+            <div id="mensajeRegistro"></div>
         </div>
         <div class="formulario login">
             <form id="formularioLogin">
@@ -36,8 +38,9 @@
                 <input type="password" name="password" id="passwordLogin">
                 <input type="submit" value="Enviar">
             </form>
+            <div id="mensajeLogin"></div>
         </div>
-        <div class="formulario deposito">
+        <div class="formulario deposito" id="ventanaDeposito">
             <form id="formularioDeposito">
                 <h5>En la casa se la van a encontrar los pibes... </h5>
                 <h2>Deposite</h2>
@@ -46,13 +49,13 @@
                 <input type="submit" value="Enviar">
             </form>
         </div>
-        <div class="formulario transferencias">
+        <div class="formulario transferencias" id="ventanaTransferencias">
             <form id="formularioTransferencias">
                 <h5>estemmm... </h5>
                 <h2>Transferencias</h2>
                 <label for="usuarioReceptor">Usuario que recibe:</label>
                 <input type="text" name="usuarioReceptor" id="usuarioReceptor">
-                <label for="montoTransferido">Password:</label>
+                <label for="montoTransferido">monto:</label>
                 <input type="number" name="montoTransferido" id="montoTransferido">
                 <input type="submit" value="Enviar">
             </form>
