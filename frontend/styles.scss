@@ -1,0 +1,22 @@
+body{
+    background-image: url(./imagenes/mucho-dinero-23656953.jpg);
+    z-index: -1;
+}
+.formularios{
+    display: flex;
+    width: 100%;
+}
+
+.formulario{
+    background-color: rgb(142, 230, 204);
+    display: flex;
+    padding: 25px;
+    flex-direction: column;
+    justify-content: space-evenly;
+    width: 200px;
+    height: 350px;
+    margin: 60px;
+    h2{
+        text-align: end;
+    }
+}

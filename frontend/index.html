@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./styles.css">
+    <script src="./scripts.js"></script>
+</head>
+
+<body>
+    <div class="formularios">
+        <div class="formulario Registro">
+            <h5>Usted es nuevito? </h5>
+            <h2>Regístrese maestro!</h2>
+            <form id="formularioRegistro">
+                <label for="nombre">Nombre:</label>
+                <input type="text" name="nombre" id="nombre">
+                <label for="apellido">Apellido:</label>
+                <input type="text" name="apellido" id="apellido">
+                <label for="usuario">Usuario:</label>
+                <input type="text" name="usuario" id="usuarioRegistro">
+                <label for="password">Password:</label>
+                <input type="password" name="password" id="passwordRegistro">
+                <input type="submit" value="Enviar">
+            </form>
+        </div>
+        <div class="formulario login">
+            <form id="formularioLogin">
+                <h5>Ya es usuario? </h5>
+                <h2>Hágale al loguín!</h2>
+                <label for="usuario">Usuario:</label>
+                <input type="text" name="usuario" id="usuarioLogin">
+                <label for="password">Password:</label>
+                <input type="password" name="password" id="passwordLogin">
+                <input type="submit" value="Enviar">
+            </form>
+        </div>
+        <div class="formulario deposito">
+            <form id="formularioDeposito">
+                <h5>En la casa se la van a encontrar los pibes... </h5>
+                <h2>Deposite</h2>
+                <label for="montoDepositado">Monto:</label>
+                <input type="number" name="montoDepositado" id="montoDepositado">
+                <input type="submit" value="Enviar">
+            </form>
+        </div>
+        <div class="formulario transferencias">
+            <form id="formularioTransferencias">
+                <h5>estemmm... </h5>
+                <h2>Transferencias</h2>
+                <label for="usuarioReceptor">Usuario que recibe:</label>
+                <input type="text" name="usuarioReceptor" id="usuarioReceptor">
+                <label for="montoTransferido">Password:</label>
+                <input type="number" name="montoTransferido" id="montoTransferido">
+                <input type="submit" value="Enviar">
+            </form>
+        </div>
+
+    </div>
+    <div class="operaciones"></div>
+    </div>
+</body>
+
+</html>
