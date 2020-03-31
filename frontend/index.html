@@ -10,9 +10,22 @@
 </head>
 
 <body>
-    <h1>socioS Bank</h1>
-    <div class="formularios">
-        <div class="formulario Registro">
+    <h1>SocioS Bank</h1>
+
+    <div class="portada" id="portada">
+        <h2>BIENVENIDOS AL MEJOR BANCO DEL MUNDO</h2>
+        <h3>DONDE TU DINERO VALE MUCHO MÁS</h3>
+
+        <h3>Empezemos...</h3>
+        <div class="botones" id="botones">
+            <button class="boton" id="ingresar">INGRESAR</button>
+
+            <button class="boton" id="registrar">REGISTRARME</button>
+        </div>
+
+    </div>
+
+        <div class="formularios" id="registro">
             <h5>Usted es nuevito? </h5>
             <h2>Regístrese maestro!</h2>
             <form id="formularioRegistro">
@@ -26,9 +39,12 @@
                 <input type="password" name="password" id="passwordRegistro" required>
                 <input type="submit" value="Enviar">
             </form>
-            <div id="mensajeRegistro"></div>
         </div>
-        <div class="formulario login">
+        <div id="mensajeRegistro" class="mensajes">
+            <button class="boton" id="salir" onclick="window.location.href = 'index.html'">SALIR</button>
+            <button class="boton" id="registrarme">REGISTRARME</button>
+        </div>
+        <div class="formularios" id="formularioIngresar">
             <form id="formularioLogin">
                 <h5>Ya es usuario? </h5>
                 <h2>Hágale al loguín!</h2>
@@ -38,9 +54,13 @@
                 <input type="password" name="password" id="passwordLogin">
                 <input type="submit" value="Enviar">
             </form>
-            <div id="mensajeLogin"></div>
+            <div id="mensajeLogin" class="mensajes">
+                <button class="boton" id="depositar">DEPOSITAR</button>
+                <button class="boton" id="transferir">TRANSFERIR</button>
+            </div>
         </div>
-        <div class="formulario deposito" id="ventanaDeposito">
+        
+        <div class="formularios" id="ventanaDeposito">
             <form id="formularioDeposito">
                 <h5>En la casa se la van a encontrar los pibes... </h5>
                 <h2>Deposite</h2>
@@ -49,7 +69,7 @@
                 <input type="submit" value="Enviar">
             </form>
         </div>
-        <div class="formulario transferencias" id="ventanaTransferencias">
+        <div class="formularios" id="ventanaTransferencias">
             <form id="formularioTransferencias">
                 <h5>estemmm... </h5>
                 <h2>Transferencias</h2>
@@ -61,7 +81,6 @@
             </form>
         </div>
 
-    </div>
     <div class="operaciones"></div>
     </div>
 </body>

@@ -9,6 +9,7 @@ app.listen(3001, () => {
 });
 app.post('/usuarios',verificarUsuario, (req, res) => {
     const nuevoUsuario = req.body;
+    nuevoUsuario.saldo = 0;
     usuarios.push(nuevoUsuario);
     console.log(JSON.stringify(usuarios));
     res.status(200).json(nuevoUsuario);
@@ -16,14 +17,27 @@ app.post('/usuarios',verificarUsuario, (req, res) => {
 app.get('/usuarios', (req, res) => {
     res.json(usuarios);
 });
-app.post('/usuarios/login',logIn, (req, res) => {
+app.get('/usuarios/:usuario', esUnUsuario,  (req, res) => {
+    usuario = req.usuario;
+    res.json(usuario);
+});
+
+app.post('/usuarios/:usuario',logIn, (req, res) => {
     usuario = req.usuario;
     usuario.logIn = true;
     res.status(200).send('Acceso autorizado')
 });
-app.post('/usuarios/depositos', estaLogueado, (req, res) => {
+
+///////////////
+app.post('/usuarios/:usuario/depositos',esUnUsuario,  (req, res) => {
     usuario = req.usuario;
-    const monto = parseInt(req.body.monto) ;
+    const saldo = parseInt(usuario.saldo);
+    const monto = parseInt(req.body.saldo);
+    const nuevoSaldo = saldo+monto;
+    usuario = req.nuevoSaldo;
+    //const nuevoSaldo = (saldo + monto);
+
+    res.status(200).json(usuario);
 });
 ///middleware usuario
 function verificarUsuario(req, res, next){
@@ -48,10 +62,22 @@ function logIn(req, res, next){
         res.status(401).send('Algunos de los datos no son correctos')
     }
 }
-function estaLogueado( req, res, next){
-    const usuario = req.usuario;
-    const logIn = usuario.login;
-    if(logIn){
-        next()
+
+////////////
+function esUnUsuario(req, res, next){
+    const nombreUsuario = req.params.usuario;
+    const usuario = usuarios.find(element => element.usuario === nombreUsuario)
+    if(usuario){
+        req.usuario = usuario;
+        next();
+    }else{
+        res.status(404).send('Usuario no registrado')
     }
 }
+// function estaLogueado( req, res, next){
+//     const usuario = req.usuario;
+//     const logIn = usuario.login;
+//     if(logIn){
+//         next()
+//     }
+// }
