@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+​
 
 <head>
     <meta charset="UTF-8">
@@ -8,62 +9,83 @@
     <link rel="stylesheet" href="./styles.css">
     <script src="./scripts.js"></script>
 </head>
+​
 
 <body>
-    <h1>socioS Bank</h1>
-    <div class="formularios">
-        <div class="formulario Registro">
-            <h5>Usted es nuevito? </h5>
-            <h2>Regístrese maestro!</h2>
-            <form id="formularioRegistro">
-                <label for="nombre">Nombre:</label>
-                <input type="text" name="nombre" id="nombre" required>
-                <label for="apellido">Apellido:</label>
-                <input type="text" name="apellido" id="apellido" required>
-                <label for="usuario">Usuario:</label>
-                <input type="text" name="usuario" id="usuarioRegistro" required>
-                <label for="password">Password:</label>
-                <input type="password" name="password" id="passwordRegistro" required>
-                <input type="submit" value="Enviar">
-            </form>
-            <div id="mensajeRegistro"></div>
+    <h1>SocioS Bank</h1>
+    ​
+    <div class="portada" id="portada">
+        <h2>BIENVENIDOS AL MEJOR BANCO DEL MUNDO</h2>
+        <h3>DONDE TU DINERO VALE MUCHO MÁS</h3>
+        ​
+        <h3>Empecemos...</h3>
+        <div class="botones" id="botones">
+            <button class="boton" id="ingresar">INGRESAR</button>
+            ​
+            <button class="boton" id="registrar">REGISTRARME</button>
         </div>
-        <div class="formulario login">
-            <form id="formularioLogin">
-                <h5>Ya es usuario? </h5>
-                <h2>Hágale al loguín!</h2>
-                <label for="usuario">Usuario:</label>
-                <input type="text" name="usuario" id="usuarioLogin">
-                <label for="password">Password:</label>
-                <input type="password" name="password" id="passwordLogin">
-                <input type="submit" value="Enviar">
-            </form>
-            <div id="mensajeLogin"></div>
-        </div>
-        <div class="formulario deposito" id="ventanaDeposito">
-            <form id="formularioDeposito">
-                <h5>En la casa se la van a encontrar los pibes... </h5>
-                <h2>Deposite</h2>
-                <label for="montoDepositado">Monto:</label>
-                <input type="number" name="montoDepositado" id="montoDepositado">
-                <input type="submit" value="Enviar">
-            </form>
-        </div>
-        <div class="formulario transferencias" id="ventanaTransferencias">
-            <form id="formularioTransferencias">
-                <h5>estemmm... </h5>
-                <h2>Transferencias</h2>
-                <label for="usuarioReceptor">Usuario que recibe:</label>
-                <input type="text" name="usuarioReceptor" id="usuarioReceptor">
-                <label for="montoTransferido">monto:</label>
-                <input type="number" name="montoTransferido" id="montoTransferido">
-                <input type="submit" value="Enviar">
-            </form>
-        </div>
-
+        ​
     </div>
+    ​
+    <div class="formularios" id="registro">
+        <h5>Usted es nuevito? </h5>
+        <h2>Regístrese maestro!</h2>
+        <form id="formularioRegistro">
+            <label for="nombre">Nombre:</label>
+            <input type="text" name="nombre" id="nombre" required>
+            <label for="apellido">Apellido:</label>
+            <input type="text" name="apellido" id="apellido" required>
+            <label for="usuario">Usuario:</label>
+            <input type="text" name="usuario" id="usuarioRegistro" required>
+            <label for="password">Password:</label>
+            <input type="password" name="password" id="passwordRegistro" required>
+            <input type="submit" value="Enviar">
+        </form>
+    </div>
+    <div id="mensajeRegistro" class="mensajes">
+        <button class="boton" id="salir" onclick="window.location.href = 'index.html'">SALIR</button>
+        <button class="boton" id="registrarme">REGISTRARME</button>
+    </div>
+    <div class="formularios" id="formularioIngresar">
+        <form id="formularioLogin">
+            <h5>Ya es usuario? </h5>
+            <h2>Hágale al loguín!</h2>
+            <label for="usuario">Usuario:</label>
+            <input type="text" name="usuario" id="usuarioLogin">
+            <label for="password">Password:</label>
+            <input type="password" name="password" id="passwordLogin">
+            <input type="submit" value="Enviar">
+        </form>
+        <div id="mensajeLogin" class="mensajes">
+            <button class="boton" id="depositar">DEPOSITAR</button>
+            <button class="boton" id="transferir">TRANSFERIR</button>
+        </div>
+    </div>
+
+    <div class="formularios" id="ventanaDeposito">
+        <form id="formularioDeposito">
+            <h5>En la casa se la van a encontrar los pibes... </h5>
+            <h2>Deposite</h2>
+            <label for="montoDepositado">Monto:</label>
+            <input type="number" name="montoDepositado" id="montoDepositado">
+            <input type="submit" value="Enviar">
+        </form>
+    </div>
+    <div class="formularios" id="ventanaTransferencias">
+        <form id="formularioTransferencias">
+            <h5>estemmm... </h5>
+            <h2>Transferencias</h2>
+            <label for="usuarioReceptor">Usuario que recibe:</label>
+            <input type="text" name="usuarioReceptor" id="usuarioReceptor">
+            <label for="montoTransferido">monto:</label>
+            <input type="number" name="montoTransferido" id="montoTransferido">
+            <input type="submit" value="Enviar">
+        </form>
+    </div>
+    ​
     <div class="operaciones"></div>
     </div>
 </body>
+​
 
 </html>
