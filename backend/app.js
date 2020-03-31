@@ -35,7 +35,7 @@ app.post('/usuarios/:usuario/depositos',esUnUsuario,  (req, res) => {
     const saldo = parseInt(usuario.saldo);
     const monto = parseInt(req.body.saldo);
     const nuevoSaldo = saldo+monto;
-    usuario = req.nuevoSaldo;
+    //usuario = req.nuevoSaldo;
     //const nuevoSaldo = (saldo + monto);
 
     res.status(200).json(usuario);
