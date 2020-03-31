@@ -44,7 +44,6 @@ function mostrarExitoRegistro() {
 }
 ​
 function mostrarUsuarioYaExiste() {
-​
     let msjYaExiste = document.createElement('div');
     msjYaExiste.className = 'msjExito';
     msjYaExiste.innerHTML = 'Ese usuario ya existe!'
@@ -71,7 +70,6 @@ function getUser() {
 /// enviar login ///////////////
 ​
 function getLogin() {
-​
     const usuario = document.getElementById('usuarioLogin').value;
     const password = document.getElementById('passwordLogin').value;
     return {
@@ -115,7 +113,6 @@ function mostrarExitoLogin() {
     let mensajeLogin = document.getElementById('mensajeLogin');
     //mensajeLogin.innerHTML = '';
     mensajeLogin.insertAdjacentElement('afterbegin', msjExito);
-​
     document.getElementById('formularioLogin').style.display = 'none';
     document.getElementById('mensajeLogin').style.display = 'block'
     
@@ -131,14 +128,12 @@ function mostrarErrorLogin() {
     mensajeLogin.innerHTML = '';
     mensajeLogin.appendChild(msjExito);
 }
-​
 function ingresarApp(){
     let portada = document.getElementById('portada');
     let formularioLogin = document.getElementById('formularioIngresar');
     portada.style.display = 'none';
     formularioLogin.style.display = 'block'
 }
-​
 function registrarse(){
     let portada = document.getElementById('portada');
     let formRegistro = document.getElementById('registro');
@@ -146,12 +141,10 @@ function registrarse(){
     formRegistro.style.display = 'block';
     document.getElementById('mensajeRegistro').style.display = 'none';
 }
-​
 function depositar () {
     document.getElementById('mensajeLogin').style.display = 'none';
     document.getElementById('ventanaDeposito').style.display = 'block';
 }
-​
 function transferir() {
     document.getElementById('mensajeLogin').style.display = 'none';
     document.getElementById('ventanaTransferencias').style.display = 'block'
@@ -169,7 +162,6 @@ function eventos() {
 function cargaPagina() {
     eventos();
 }
-​
 function esUnUsuario(req, res, next){
     const nombreUsuario = req.params.usuario;
     const usuario = usuarios.find(element => element.usuario === nombreUsuario)

@@ -3,6 +3,7 @@
         "nombre": "diego",
         "apellido": "maradona",
         "usuario": "dieguito",
-        "password": 1234
+        "password": 1234,
+        "saldo": 0
     }
 ]
