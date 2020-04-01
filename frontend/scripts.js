@@ -67,8 +67,8 @@ function getUser() {
 };
 
 /// enviar login ///////////////
-let usuarioLogueadoActual = '';
 
+let usuarioLogueado = '';
 function getLogin() {
     const usuario = document.getElementById('usuarioLogin').value;
     const password = document.getElementById('passwordLogin').value;
@@ -89,10 +89,10 @@ function postLogin(usuarioLogueado) {
             body: JSON.stringify(usuarioLogueado)
         })
         .then(function (res) {
-            console.log(res.status);
+            //console.log(res.status);
             if (res.status === 200) {
                 usuarioLogueadoActual = usuarioLogueado.usuario;
-                console.log(usuarioLogueadoActual);
+                //console.log(usuarioLogueadoActual);
                 mostrarExitoLogin();
             } else {
                 mostrarErrorLogin();
@@ -133,29 +133,33 @@ function mostrarErrorLogin() {
 
 //////////////// deposito ///////////////
 
-let usuarioLogueado = '';
+let usuarioLogueadoActual = '';
 
 function getDeposito() {
     const montoDepositado = document.getElementById('montoDepositado').value;
+    //console.log(montoDepositado);
     return {
         monto: montoDepositado
     }
 }
 
 function postDeposito(montoDeposito) {
-    fetch('http://localhost:3001/usuarios/' + usuarioLogueadoActual + '/depositos',
-        {
-            method: 'POST',
+    //console.log(usuarioLogueadoActual);
+    let url = 'http://localhost:3001/usuarios/' + usuarioLogueadoActual + '/depositos';
+    console.log (url);
+    fetch(url,
+        {   method: 'POST',
             headers: {
                 'Accept': 'aplication/json',
                 'Content-type': 'application/json',
             },
             body: JSON.stringify(montoDeposito)
         }).then(function (res) {
+            console.log(res);
             return res.json();
-        })
-        .then(function (res) {
-            console.log(res.status);
+        }).then(function (res) {
+            //console.log(res.status);
+            //console.log(res.body);
             if (res.status === 200) {
                 return res;
             } else {
@@ -168,13 +172,16 @@ function postDeposito(montoDeposito) {
 async function sendDeposito(event) {
     event.preventDefault();
     const deposito = getDeposito();
+    //console.log(deposito);
     let res = await postDeposito(deposito);
-    console.log(res);
-    //let saldo = res.saldo;
-    console.log(saldo);
+    //console.log(res);
+    let saldo = res.saldo;
+    //console.log(saldo);
     let form = document.getElementById('formularioDeposito');
     form.reset();
 }
+
+
 
 ////funciones de display /////////////
 

@@ -31,12 +31,12 @@ app.post('/usuarios/login',logIn, (req, res) => {
 
 ///////////////
 app.post('/usuarios/:usuario/depositos',esUnUsuario,  (req, res) => {
-    //usuario = req.usuario
+    usuario = req.usuario;
 
     const monto = parseInt(req.body.monto);
     usuario.saldo =  parseInt(usuario.saldo) + monto;
 
-    res.status(200).json(usuario.saldo);
+    res.status(200).json({saldo:usuario.saldo});
 });
 ///middleware usuario
 function verificarUsuario(req, res, next) {
