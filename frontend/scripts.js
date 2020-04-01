@@ -132,6 +132,7 @@ function mostrarErrorLogin() {
 }
 
 //////////////// deposito ///////////////
+
 let usuarioLogueado = '';
 
 function getDeposito() {
@@ -175,7 +176,6 @@ async function sendDeposito(event) {
     form.reset();
 }
 
-
 ////funciones de display /////////////
 
 function ingresarApp() {
@@ -199,8 +199,6 @@ function transferir() {
     document.getElementById('mensajeLogin').style.display = 'none';
     document.getElementById('ventanaTransferencias').style.display = 'block'
 }
-
-
 
 function eventos() {
     document.getElementById('formularioRegistro').addEventListener('submit', sendForm);
