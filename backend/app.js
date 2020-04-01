@@ -23,22 +23,20 @@ app.get('/usuarios/:usuario', esUnUsuario,  (req, res) => {
     res.json(usuario);
 });
 
-app.post('/usuarios/:usuario',logIn, (req, res) => {
-    usuario = req.usuario;
+app.post('/usuarios/login',logIn, (req, res) => {
+    usuario = req.body;
     usuario.logIn = true;
-    res.status(200).send('Acceso autorizado')
+    res.status(200).json(usuario)
 });
 
 ///////////////
 app.post('/usuarios/:usuario/depositos',esUnUsuario,  (req, res) => {
-    usuario = req.usuario;
-    const saldo = parseInt(usuario.saldo);
-    const monto = parseInt(req.body.saldo);
-    const nuevoSaldo = saldo+monto;
-    //usuario = req.nuevoSaldo;
-    //const nuevoSaldo = (saldo + monto);
+    //usuario = req.usuario
 
-    res.status(200).json(usuario);
+    const monto = parseInt(req.body.monto);
+    usuario.saldo =  parseInt(usuario.saldo) + monto;
+
+    res.status(200).json(usuario.saldo);
 });
 ///middleware usuario
 function verificarUsuario(req, res, next) {
@@ -58,6 +56,7 @@ function logIn(req, res, next) {
     if (usuario && parseInt(usuario.password) === passwordRequerida) {
         req.usuario = usuario;
         req.password = passwordRequerida;
+
         next();
     } else {
         res.status(401).send('Algunos de los datos no son correctos')
@@ -70,6 +69,7 @@ function esUnUsuario(req, res, next){
     const usuario = usuarios.find(element => element.usuario === nombreUsuario)
     if(usuario){
         req.usuario = usuario;
+        //req.saldo = saldo
         next();
     }else{
         res.status(404).send('Usuario no registrado')
