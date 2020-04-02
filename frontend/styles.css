@@ -154,4 +154,10 @@ h3 {
   display: block;
   padding: 20px;
 }
+
+.btnDepositarVolver {
+  display: none;
+  width: 200px;
+  height: 100px;
+}
 /*# sourceMappingURL=styles.css.map */

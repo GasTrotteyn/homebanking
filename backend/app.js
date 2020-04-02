@@ -18,26 +18,27 @@ app.post('/usuarios', verificarUsuario, (req, res) => {
 app.get('/usuarios', (req, res) => {
     res.json(usuarios);
 });
-app.get('/usuarios/:usuario', esUnUsuario,  (req, res) => {
+app.get('/usuarios/:usuario', esUnUsuario, (req, res) => {
     usuario = req.usuario;
     res.json(usuario);
 });
 
-app.post('/usuarios/login',logIn, (req, res) => {
+app.post('/usuarios/login', logIn, (req, res) => {
     usuario = req.body;
     usuario.logIn = true;
     res.status(200).json(usuario)
 });
 
 ///////////////
-app.post('/usuarios/:usuario/depositos',esUnUsuario,  (req, res) => {
+app.post('/usuarios/:usuario/depositos', esUnUsuario, async function (req, res) {
     usuario = req.usuario;
-
+    console.log(req.body);
     const monto = parseInt(req.body.monto);
-    usuario.saldo =  parseInt(usuario.saldo) + monto;
-
-    res.status(200).json({saldo:usuario.saldo});
+    usuario.saldo = parseInt(usuario.saldo) + monto;
+    let enviar = await JSON.stringify({ saldo: usuario.saldo })
+    res.status(200).send(enviar);
 });
+
 ///middleware usuario
 function verificarUsuario(req, res, next) {
     const nombreUsuario = req.body.usuario;
@@ -64,14 +65,14 @@ function logIn(req, res, next) {
 }
 
 ////////////
-function esUnUsuario(req, res, next){
+function esUnUsuario(req, res, next) {
     const nombreUsuario = req.params.usuario;
     const usuario = usuarios.find(element => element.usuario === nombreUsuario)
-    if(usuario){
+    if (usuario) {
         req.usuario = usuario;
         //req.saldo = saldo
         next();
-    }else{
+    } else {
         res.status(404).send('Usuario no registrado')
     }
 }

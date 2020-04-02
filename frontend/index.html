@@ -27,60 +27,64 @@
 
     </div>
 
-        <div class="formularios" id="registro">
-            <h5>Usted es nuevito? </h5>
-            <h2>Regístrese maestro!</h2>
-            <form id="formularioRegistro">
-                <label for="nombre">Nombre:</label>
-                <input type="text" name="nombre" id="nombre" required>
-                <label for="apellido">Apellido:</label>
-                <input type="text" name="apellido" id="apellido" required>
-                <label for="usuario">Usuario:</label>
-                <input type="text" name="usuario" id="usuarioRegistro" required>
-                <label for="password">Password:</label>
-                <input type="password" name="password" id="passwordRegistro" required>
-                <input type="submit" value="Enviar">
-            </form>
+    <div class="formularios" id="registro">
+        <h5>Usted es nuevito? </h5>
+        <h2>Regístrese maestro!</h2>
+        <form id="formularioRegistro">
+            <label for="nombre">Nombre:</label>
+            <input type="text" name="nombre" id="nombre" required>
+            <label for="apellido">Apellido:</label>
+            <input type="text" name="apellido" id="apellido" required>
+            <label for="usuario">Usuario:</label>
+            <input type="text" name="usuario" id="usuarioRegistro" required>
+            <label for="password">Password:</label>
+            <input type="password" name="password" id="passwordRegistro" required>
+            <input type="submit" value="Enviar">
+        </form>
+    </div>
+    <div id="mensajeRegistro" class="mensajes">
+        <button class="boton" id="salir" onclick="window.location.href = 'index.html'">SALIR</button>
+        <button class="boton" id="registrarme">REGISTRARME</button>
+    </div>
+    <div class="formularios" id="formularioIngresar">
+        <form id="formularioLogin">
+            <h5>Ya es usuario? </h5>
+            <h2>Hágale al loguín!</h2>
+            <label for="usuario">Usuario:</label>
+            <input type="text" name="usuario" id="usuarioLogin">
+            <label for="password">Password:</label>
+            <input type="password" name="password" id="passwordLogin">
+            <input type="submit" value="Enviar">
+        </form>
+        <div class="mensajes" id="mensajeLogin"></div>
+        <div id="btnsLogin" class="mensajes">
+            <button class="boton" id="depositar">DEPOSITAR</button>
+            <button class="boton" id="transferir">TRANSFERIR</button>
         </div>
-        <div id="mensajeRegistro" class="mensajes">
-            <button class="boton" id="salir" onclick="window.location.href = 'index.html'">SALIR</button>
-            <button class="boton" id="registrarme">REGISTRARME</button>
-        </div>
-        <div class="formularios" id="formularioIngresar">
-            <form id="formularioLogin">
-                <h5>Ya es usuario? </h5>
-                <h2>Hágale al loguín!</h2>
-                <label for="usuario">Usuario:</label>
-                <input type="text" name="usuario" id="usuarioLogin">
-                <label for="password">Password:</label>
-                <input type="password" name="password" id="passwordLogin">
-                <input type="submit" value="Enviar">
-            </form>
-            <div id="mensajeLogin" class="mensajes">
-                <button class="boton" id="depositar">DEPOSITAR</button>
-                <button class="boton" id="transferir">TRANSFERIR</button>
-            </div>
-        </div>
-        <div class="formularios" id="ventanaDeposito">
-            <form id="formularioDeposito">
-                <h5>En la casa se la van a encontrar los pibes... </h5>
-                <h2>Deposite</h2>
-                <label for="montoDepositado">Monto:</label>
-                <input type="number" name="montoDepositado" id="montoDepositado">
-                <input type="submit" value="Enviar" id="enviarDeposito">
-            </form>
-            </div>
-        <div class="formularios" id="ventanaTransferencias">
-            <form id="formularioTransferencias">
-                <h5>estemmm... </h5>
-                <h2>Transferencias</h2>
-                <label for="usuarioReceptor">Usuario que recibe:</label>
-                <input type="text" name="usuarioReceptor" id="usuarioReceptor">
-                <label for="montoTransferido">monto:</label>
-                <input type="number" name="montoTransferido" id="montoTransferido">
-                <input type="submit" value="Enviar">
-            </form>
-        </div>
+    </div>
+    <div class="formularios" id="ventanaDeposito">
+        <form id="formularioDeposito">
+            <h5>En la casa se la van a encontrar los pibes... </h5>
+            <h2>Deposite</h2>
+            <label for="montoDepositado">Monto:</label>
+            <input type="number" name="montoDepositado" id="montoDepositado">
+            <input type="submit" value="Enviar" id="enviarDeposito">
+        </form>
+    </div>
+    <div class="mensajes" id="mensajeDeposito">
+    </div>
+    <input type="submit" value="Volver" id="btnDepositoSalir" class="btnDepositarVolver">
+    <div class="formularios" id="ventanaTransferencias">
+        <form id="formularioTransferencias">
+            <h5>estemmm... </h5>
+            <h2>Transferencias</h2>
+            <label for="usuarioReceptor">Usuario que recibe:</label>
+            <input type="text" name="usuarioReceptor" id="usuarioReceptor">
+            <label for="montoTransferido">monto:</label>
+            <input type="number" name="montoTransferido" id="montoTransferido">
+            <input type="submit" value="Enviar">
+        </form>
+    </div>
     </div>
 
     <div class="operaciones"></div>

@@ -113,13 +113,12 @@ function mostrarExitoLogin() {
     msjExito.className = 'msjExito';
     msjExito.innerHTML = 'Usted se ha logueado correctamante!'
     let mensajeLogin = document.getElementById('mensajeLogin');
-    //mensajeLogin.innerHTML = '';
+    // mensajeLogin.removeChild(mensajeLogin.childNodes[0]);
     mensajeLogin.insertAdjacentElement('afterbegin', msjExito);
-    document.getElementById('formularioLogin').style.display = 'none';
-    document.getElementById('mensajeLogin').style.display = 'block'
 
-    //document.getElementById('ventanaDeposito').style.display = 'block';
-    //document.getElementById('ventanaTransferencias').style.display = 'block';
+    document.getElementById('formularioLogin').style.display = 'none';
+    document.getElementById('btnsLogin').style.display = 'block';
+    document.getElementById('mensajeLogin').style.display = 'block';
 }
 
 function mostrarErrorLogin() {
@@ -143,45 +142,69 @@ function getDeposito() {
     }
 }
 
-function postDeposito(montoDeposito) {
-    //console.log(usuarioLogueadoActual);
+async function postDeposito(montoDeposito) {
+
     let url = 'http://localhost:3001/usuarios/' + usuarioLogueadoActual + '/depositos';
-    console.log (url);
-    fetch(url,
-        {   method: 'POST',
+    console.log(url);
+    let deposito = await fetch(url,
+        {
+            method: 'POST',
             headers: {
                 'Accept': 'aplication/json',
                 'Content-type': 'application/json',
             },
             body: JSON.stringify(montoDeposito)
-        }).then(function (res) {
-            console.log(res);
-            return res.json();
-        }).then(function (res) {
-            //console.log(res.status);
-            //console.log(res.body);
-            if (res.status === 200) {
-                return res;
-            } else {
-                console.log('hubo un error');
-            }
-        }
-        )
+        })
+    //console.log(deposito);
+    let depositojson = await deposito.json();
+    //console.log(depositojson);
+    if (depositojson) {
+        console.log('tuprima');
+        return depositojson;
+    } else {
+        console.log('hubo un error');
+        mostrarErrorDeposito();
+    }
 }
 
 async function sendDeposito(event) {
     event.preventDefault();
     const deposito = getDeposito();
-    //console.log(deposito);
     let res = await postDeposito(deposito);
     //console.log(res);
     let saldo = res.saldo;
-    //console.log(saldo);
     let form = document.getElementById('formularioDeposito');
     form.reset();
+    mostrarExitoDeposito(saldo);
 }
 
+function mostrarExitoDeposito(saldo) {
+    let msjExito = document.createElement('div');
+    msjExito.className = 'msjExito';
+    msjExito.innerHTML = `Depósito recibido, su nuevo saldo es ${saldo}`
+    let mensajeDeposito = document.getElementById('mensajeDeposito');
+    mensajeDeposito.innerHTML = '';
+    mensajeDeposito.insertAdjacentElement('afterbegin', msjExito);
+    document.getElementById('ventanaDeposito').style.display = 'none';
+    document.getElementById('mensajeDeposito').style.display = 'block';
+}
 
+function mostrarErrorDeposito() {
+    let msjExito = document.createElement('div');
+    msjExito.className = 'msjExito';
+    msjExito.innerHTML = 'Algo salió mal'
+    let mensajeDeposito = document.getElementById('mensajeDeposito');
+    mensajeDeposito.insertAdjacentElement('afterbegin', msjExito);
+    document.getElementById('ventanaDeposito').style.display = 'none';
+    document.getElementById('mensajeDeposito').style.display = 'block'
+}
+
+function volverARecienLogueado (){
+    document.getElementById('mensajeDeposito').style.display = 'none';
+    document.getElementById('btnsLogin').style.display = 'block';
+    document.getElementById('btnDepositoSalir').style.display = 'none';
+    document.getElementById('ventanaDeposito').style.display = 'none';
+}
 
 ////funciones de display /////////////
 
@@ -200,7 +223,9 @@ function registrarse() {
 }
 function depositar() {
     document.getElementById('mensajeLogin').style.display = 'none';
+    document.getElementById('btnsLogin').style.display = 'none'
     document.getElementById('ventanaDeposito').style.display = 'block';
+    document.getElementById('btnDepositoSalir').style.display = 'block'
 }
 function transferir() {
     document.getElementById('mensajeLogin').style.display = 'none';
@@ -215,7 +240,8 @@ function eventos() {
     document.getElementById('depositar').addEventListener('click', depositar);
     document.getElementById('transferir').addEventListener('click', transferir);
     document.getElementById('registrarme').addEventListener('click', registrarse);
-    document.getElementById('enviarDeposito').addEventListener('click', sendDeposito)
+    document.getElementById('enviarDeposito').addEventListener('click', sendDeposito);
+    document.getElementById('btnDepositoSalir').addEventListener('click', volverARecienLogueado);
 };
 
 function cargaPagina() {
