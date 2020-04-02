@@ -199,11 +199,90 @@ function mostrarErrorDeposito() {
     document.getElementById('mensajeDeposito').style.display = 'block'
 }
 
-function volverARecienLogueado (){
+/////////////  TRANSFERENCIAS ///////////////
+
+function getTransferencia() {
+    const montoTransferido = document.getElementById('montoTransferido').value;
+    const ususarioReceptor = document.getElementById('usuarioReceptor').value;
+    return {
+        usuario: usuarioLogueadoActual,
+        monto: montoTransferido,
+        receptor: ususarioReceptor
+    }
+}
+
+async function postTransferencia(transferencia) {
+
+    let url = 'http://localhost:3001/usuarios/transferencias';
+    console.log(url);
+    let res = await fetch(url,
+        {
+            method: 'POST',
+            headers: {
+                'Accept': 'aplication/json',
+                'Content-type': 'application/json',
+            },
+            body: JSON.stringify(transferencia)
+        })
+    //console.log(deposito);
+    let resjson = await res.json();
+    //console.log(depositojson);
+    if (resjson) {
+        console.log('tomá!');
+        return resjson;
+    } else {
+        console.log('hubo un error');
+        mostrarErrorTransferencia();
+    }
+}
+
+async function sendtransferencia(event) {
+    event.preventDefault();
+    const transferencia = getTransferencia();
+    let res = await postTransferencia(transferencia);
+    //console.log(res);
+    let saldoUsuario = res.saldoEmisor;
+    let form = document.getElementById('formularioTransferencias');
+    form.reset();
+    mostrarExitoTransferencia(saldoUsuario);
+}
+
+function mostrarExitoTransferencia(saldo) {
+    let msjExito = document.createElement('div');
+    msjExito.className = 'msjExito';
+    msjExito.innerHTML = `Trasnferencia exitosa, su nuevo saldo es ${saldo}`
+    let mensajeTransferencia = document.getElementById('mensajeTransferencia');
+    mensajeTransferencia.innerHTML = '';
+    mensajeTransferencia.insertAdjacentElement('afterbegin', msjExito);
+    document.getElementById('formularioTransferencias').style.display = 'none';
+    document.getElementById('mensajeTransferencia').style.display = 'block';
+}
+
+function mostrarErrorTransferencia() {
+    let msjExito = document.createElement('div');
+    msjExito.className = 'msjExito';
+    msjExito.innerHTML = 'No te da el cuero papu'
+    let mensajeTransferencia = document.getElementById('mensajeTransferencia');
+    mensajeTransferencia.insertAdjacentElement('afterbegin', msjExito);
+    document.getElementById('formularioTransferencias').style.display = 'none';
+    document.getElementById('mensajeTransferencia').style.display = 'block';
+}
+
+
+
+
+
+
+
+
+
+
+function volverARecienLogueado() {
     document.getElementById('mensajeDeposito').style.display = 'none';
     document.getElementById('btnsLogin').style.display = 'block';
     document.getElementById('btnDepositoSalir').style.display = 'none';
     document.getElementById('ventanaDeposito').style.display = 'none';
+    document.getElementById('ventanaTransferencias').style.display = 'none';
 }
 
 ////funciones de display /////////////
@@ -223,13 +302,17 @@ function registrarse() {
 }
 function depositar() {
     document.getElementById('mensajeLogin').style.display = 'none';
-    document.getElementById('btnsLogin').style.display = 'none'
+    document.getElementById('btnsLogin').style.display = 'none';
     document.getElementById('ventanaDeposito').style.display = 'block';
     document.getElementById('btnDepositoSalir').style.display = 'block'
 }
 function transferir() {
     document.getElementById('mensajeLogin').style.display = 'none';
-    document.getElementById('ventanaTransferencias').style.display = 'block'
+    document.getElementById('btnsLogin').style.display = 'none';
+    document.getElementById('ventanaTransferencias').style.display = 'block';
+    document.getElementById('btnTransferenciaSalir').style.display = 'block';
+    document.getElementById('formularioTransferencias').style.display = 'flex';
+    document.getElementById('mensajeTransferencia').style.display = 'none';
 }
 
 function eventos() {
@@ -242,6 +325,8 @@ function eventos() {
     document.getElementById('registrarme').addEventListener('click', registrarse);
     document.getElementById('enviarDeposito').addEventListener('click', sendDeposito);
     document.getElementById('btnDepositoSalir').addEventListener('click', volverARecienLogueado);
+    document.getElementById('btnTransferenciaSalir').addEventListener('click', volverARecienLogueado);
+    document.getElementById('enviarTransferencia').addEventListener('click', sendtransferencia);
 };
 
 function cargaPagina() {
