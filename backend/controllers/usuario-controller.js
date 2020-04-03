@@ -18,17 +18,18 @@ function getUser(req, res) {
 }
 
 function postLogin(req, res) {
-    let usuario = req.body;
-    console.log(usuario);
-    let token = req.token;
-    console.log(token);
-    usuario.token = token;
-    res.status(200).json(token);
+    res.status(200).json(req.token);
+}
+
+function getUserFromDB (user){
+    const encontrado = usuarios.find(element => element.usuario === user);
+    return encontrado
 }
 
 function postDeposito(req, res) {
-    usuario = req.usuario;
+    usuarioSalidoDelToken = req.usuario;
     const monto = parseInt(req.body.monto);
+    usuario = getUserFromDB(usuarioSalidoDelToken);
     usuario.saldo = parseInt(usuario.saldo) + monto;
     let enviar = JSON.stringify({ saldo: usuario.saldo });
     res.status(200).send(enviar);

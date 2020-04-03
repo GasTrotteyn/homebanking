@@ -1,6 +1,9 @@
 let usuarios = require("../usuarios.json");
 const jwt = require('jsonwebtoken');
 const firma = require("../firma.json");
+
+
+
 function verificarUsuario(req, res, next) {
     const nombreUsuario = req.body.usuario;
     const usuario = usuarios.find(element => element.usuario === nombreUsuario);
@@ -10,40 +13,41 @@ function verificarUsuario(req, res, next) {
         res.status(404).send("Usuario ya existe, elegi otro");
     }
 }
+
 function logIn(req, res, next) {
     const nombreUsuario = req.body.usuario;
     const passwordRequerida = parseInt(req.body.password);
     const usuario = usuarios.find(element => element.usuario === nombreUsuario && element.password === passwordRequerida);
     if (usuario) {
-        let contenido = {usuario : nombreUsuario};
+        let contenido = { usuario: nombreUsuario };
         let token = jwt.sign(contenido, firma);
-        //console.log(token);
-        req.token = {token: token};
-        // req.usuario = usuario;
-        // req.password = passwordRequerida;
-
+        req.token = { token: token };
         next();
     } else {
         res.status(401).send("Algunos de los datos no son correctos");
     }
 }
 
-function esUnUsuario(req, res, next) {
-    const nombreUsuario = req.params.usuario;
-    const usuario = usuarios.find(element => element.usuario === nombreUsuario);
+function getUserFromReq(req) {
+    const token = req.headers.authorization.split(' ')[1];
+    const decodificado = jwt.verify(token, firma);
+    return decodificado.usuario
+}
+
+function tokenValido(req, res, next) {
+    const usuario = getUserFromReq(req);
     if (usuario) {
         req.usuario = usuario;
         next();
-    } else {
-        res.status(404).send("Usuario no registrado");
     }
+    res.status(401).send('usuario inválido');
 }
 
 function sonUsuarios(req, res, next) {
     let emisor = req.body.usuario;
-    const usuarioEmisor = usuarios.find(element => element.usuario === emisor);
+    let usuarioEmisor = usuarios.find(element => element.usuario === emisor);
     let receptor = req.body.receptor;
-    const usuarioReceptor = usuarios.find(element => element.usuario === receptor);
+    let usuarioReceptor = usuarios.find(element => element.usuario === receptor);
     if (usuarioEmisor && usuarioReceptor) {
         req.usuarioEmisor = usuarioEmisor;
 
@@ -69,7 +73,7 @@ function tieneSaldo(req, res, next) {
 module.exports = {
     verificarUsuario,
     logIn,
-    esUnUsuario,
+    tokenValido,
     sonUsuarios,
     tieneSaldo
 };

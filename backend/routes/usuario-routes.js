@@ -5,11 +5,11 @@ const api = express.Router();
 
 api.post("/", middlewares.verificarUsuario, UsuarioController.postUsuario);
 api.get("/", UsuarioController.getUsuarios);
-api.get("/:usuario", middlewares.esUnUsuario, UsuarioController.getUser);
+api.get("/:usuario", middlewares.tokenValido, UsuarioController.getUser);
 api.post("/login", middlewares.logIn, UsuarioController.postLogin);
-api.post("/:usuario/depositos", middlewares.esUnUsuario, UsuarioController.postDeposito);
+api.post("/:usuario/depositos", middlewares.tokenValido, UsuarioController.postDeposito);
 api.post(
-    "/transferencias",
+    "/transferencias", middlewares.tokenValido,
     middlewares.sonUsuarios,
     middlewares.tieneSaldo,
     UsuarioController.postTransferencia
