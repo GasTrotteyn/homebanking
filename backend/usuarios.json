@@ -5,5 +5,12 @@
         "usuario": "dieguito",
         "password": 1234,
         "saldo": 0
+    },
+    {
+        "nombre": "pedro",
+        "apellido": "lopez",
+        "usuario": "pedrito",
+        "password": 1234,
+        "saldo": 0
     }
 ]

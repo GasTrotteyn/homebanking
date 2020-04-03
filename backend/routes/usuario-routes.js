@@ -9,9 +9,9 @@ api.get("/:usuario", middlewares.esUnUsuario, UsuarioController.getUser);
 api.post("/login", middlewares.logIn, UsuarioController.postLogin);
 api.post("/:usuario/depositos", middlewares.esUnUsuario, UsuarioController.postDeposito);
 api.post(
-  "/usuarios/transferencias",
-  middlewares.sonUsuarios,
-  middlewares.tieneSaldo,
-  UsuarioController.postTransferencia
+    "/transferencias",
+    middlewares.sonUsuarios,
+    middlewares.tieneSaldo,
+    UsuarioController.postTransferencia
 );
 module.exports = api;
