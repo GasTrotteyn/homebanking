@@ -37,8 +37,8 @@ function getUserFromReq(req) {
 function tokenValido(req, res, next) {
     const usuario = getUserFromReq(req);
     if (usuario) {
+        console.log('tomá!');
         req.usuario = usuario;
-        console.log('tomá');
         next();
     } else {
         res.status(401).send('usuario inválido');

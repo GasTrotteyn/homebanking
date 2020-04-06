@@ -78,6 +78,8 @@ function getLogin() {
     }
 }
 
+let token = '';
+
 function postLogin(usuarioLogueado) {
     fetch('http://localhost:3001/usuarios/login',
         {
@@ -88,13 +90,14 @@ function postLogin(usuarioLogueado) {
             },
             body: JSON.stringify(usuarioLogueado)
         })
-        .then(function (res) {
-            //console.log(res.status);
-            if (res.status === 200) {
+        .then(async function (res) {
+                if (res.status === 200) {
                 usuarioLogueadoActual = usuarioLogueado.usuario;
-                //console.log(usuarioLogueadoActual);
+                token = await res.json();
+                console.log(token);
                 mostrarExitoLogin();
             } else {
+                console.log('salio por el else');
                 mostrarErrorLogin();
             }
         })
@@ -126,8 +129,10 @@ function mostrarErrorLogin() {
     msjExito.className = 'msjExito';
     msjExito.innerHTML = 'El usuario o la contraseña son incorrectos'
     let mensajeLogin = document.getElementById('mensajeLogin');
-    mensajeLogin.innerHTML = '';
-    mensajeLogin.appendChild(msjExito);
+    mensajeLogin.insertAdjacentElement('afterbegin', msjExito);
+    document.getElementById('formularioLogin').style.display = 'none';
+    document.getElementById('mensajeRegistro').style.display = 'block';
+    document.getElementById('mensajeLogin').style.display = 'block';
 }
 
 //////////////// deposito ///////////////
@@ -143,7 +148,7 @@ function getDeposito() {
 }
 
 async function postDeposito(montoDeposito) {
-
+    console.log(token);
     let url = 'http://localhost:3001/usuarios/' + usuarioLogueadoActual + '/depositos';
     console.log(url);
     let deposito = await fetch(url,
@@ -152,6 +157,7 @@ async function postDeposito(montoDeposito) {
             headers: {
                 'Accept': 'aplication/json',
                 'Content-type': 'application/json',
+                'Authorization': `bearer ${token.token}`
             },
             body: JSON.stringify(montoDeposito)
         })
@@ -221,6 +227,7 @@ async function postTransferencia(transferencia) {
             headers: {
                 'Accept': 'aplication/json',
                 'Content-type': 'application/json',
+                'Authorization': `bearer ${token.token}`
             },
             body: JSON.stringify(transferencia)
         })

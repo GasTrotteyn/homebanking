@@ -4,8 +4,6 @@ const middlewares = require("../middlewares/middlewares");
 const api = express.Router();
 
 api.post("/", middlewares.verificarUsuario, UsuarioController.postUsuario);
-api.get("/", UsuarioController.getUsuarios);
-api.get("/:usuario", middlewares.tokenValido, UsuarioController.getUser);
 api.post("/login", middlewares.logIn, UsuarioController.postLogin);
 api.post("/:usuario/depositos", middlewares.tokenValido, UsuarioController.postDeposito);
 api.post(
@@ -14,4 +12,7 @@ api.post(
     middlewares.tieneSaldo,
     UsuarioController.postTransferencia
 );
+api.get("/", UsuarioController.getUsuarios);
+api.get("/:usuario", middlewares.tokenValido, UsuarioController.getUser);
+
 module.exports = api;
