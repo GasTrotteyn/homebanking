@@ -1,4 +1,4 @@
-let usuarios = require("../usuarios.json");
+//let usuarios = require("../usuarios.json");
 const jwt = require('jsonwebtoken');
 const firma = require("../firma.json");
 

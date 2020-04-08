@@ -1,11 +1,27 @@
-let usuarios = require("../usuarios.json");
+//let usuarios = require("../usuarios.json");
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
+const usuario = new Schema({
+    nombre: String,
+    apellido: String,
+    usuario: String,
+    password: Number,
+    saldo: Number
+})
+
+const Usuarios = mongoose.model('Usuarios', usuario);
 
 function postUsuario(req, res) {
     const nuevoUsuario = req.body;
-    nuevoUsuario.saldo = 0;
-    usuarios.push(nuevoUsuario);
-
-    res.status(200).json(nuevoUsuario);
+    objetoUsuario = new Usuarios(nuevoUsuario);
+    //nuevoUsuario.saldo = 0;
+    //usuarios.push(nuevoUsuario);
+    objetoUsuario.save().then((resultado) => {
+        res.status(200).send()
+    })
+        .catch((error) => {
+            res.status(500).send()
+        })
 }
 
 function getUsuarios(req, res) {
@@ -21,7 +37,7 @@ function postLogin(req, res) {
     res.status(200).json(req.token);
 }
 
-function getUserFromDB (user){
+function getUserFromDB(user) {
     const encontrado = usuarios.find(element => element.usuario === user);
     return encontrado
 }

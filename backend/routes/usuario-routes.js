@@ -3,7 +3,7 @@ const UsuarioController = require("../controllers/usuario-controller");
 const middlewares = require("../middlewares/middlewares");
 const api = express.Router();
 
-api.post("/", middlewares.verificarUsuario, UsuarioController.postUsuario);
+api.post("/",  UsuarioController.postUsuario);
 api.post("/login", middlewares.logIn, UsuarioController.postLogin);
 api.post("/:usuario/depositos", middlewares.tokenValido, UsuarioController.postDeposito);
 api.post(

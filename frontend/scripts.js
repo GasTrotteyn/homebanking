@@ -22,11 +22,9 @@ async function postUsusario(usuario) {
             return res.json()
         })
         .then(function (res) {
-            console.log(res);
             mostrarExitoRegistro();
         })
         .catch(function (res) {
-            //console.log(res);
             mostrarUsuarioYaExiste();
         })
 };
@@ -36,7 +34,6 @@ function mostrarExitoRegistro() {
     msjExito.className = 'mjeExito';
     msjExito.innerHTML = 'Usted se ha registrado correctamante!'
     let mensajeRegistro = document.getElementById('mensajeRegistro');
-    //mensajeRegistro.innerHTML = '';
     mensajeRegistro.style.display = 'block';
     document.getElementById('registro').style.display = 'none';
     mensajeRegistro.appendChild(msjExito);
@@ -47,7 +44,6 @@ function mostrarUsuarioYaExiste() {
     msjYaExiste.className = 'msjExito';
     msjYaExiste.innerHTML = 'Ese usuario ya existe!'
     let mensajeRegistro = document.getElementById('mensajeRegistro');
-    //mensajeRegistro.innerHTML = '';
     mensajeRegistro.style.display = 'block';
     document.getElementById('registro').style.display = 'none';
     mensajeRegistro.insertAdjacentElement('afterbegin', msjYaExiste);
@@ -91,13 +87,11 @@ function postLogin(usuarioLogueado) {
             body: JSON.stringify(usuarioLogueado)
         })
         .then(async function (res) {
-                if (res.status === 200) {
+            if (res.status === 200) {
                 usuarioLogueadoActual = usuarioLogueado.usuario;
                 token = await res.json();
-                console.log(token);
                 mostrarExitoLogin();
             } else {
-                console.log('salio por el else');
                 mostrarErrorLogin();
             }
         })
@@ -116,7 +110,6 @@ function mostrarExitoLogin() {
     msjExito.className = 'msjExito';
     msjExito.innerHTML = 'Usted se ha logueado correctamante!'
     let mensajeLogin = document.getElementById('mensajeLogin');
-    // mensajeLogin.removeChild(mensajeLogin.childNodes[0]);
     mensajeLogin.insertAdjacentElement('afterbegin', msjExito);
 
     document.getElementById('formularioLogin').style.display = 'none';
@@ -141,16 +134,13 @@ let usuarioLogueadoActual = '';
 
 function getDeposito() {
     const montoDepositado = document.getElementById('montoDepositado').value;
-    //console.log(montoDepositado);
     return {
         monto: montoDepositado
     }
 }
 
 async function postDeposito(montoDeposito) {
-    console.log(token);
     let url = 'http://localhost:3001/usuarios/' + usuarioLogueadoActual + '/depositos';
-    console.log(url);
     let deposito = await fetch(url,
         {
             method: 'POST',
@@ -161,14 +151,10 @@ async function postDeposito(montoDeposito) {
             },
             body: JSON.stringify(montoDeposito)
         })
-    //console.log(deposito);
     let depositojson = await deposito.json();
-    //console.log(depositojson);
     if (depositojson) {
-        console.log('tuprima');
         return depositojson;
     } else {
-        console.log('hubo un error');
         mostrarErrorDeposito();
     }
 }
@@ -177,7 +163,6 @@ async function sendDeposito(event) {
     event.preventDefault();
     const deposito = getDeposito();
     let res = await postDeposito(deposito);
-    //console.log(res);
     let saldo = res.saldo;
     let form = document.getElementById('formularioDeposito');
     form.reset();
@@ -220,7 +205,6 @@ function getTransferencia() {
 async function postTransferencia(transferencia) {
 
     let url = 'http://localhost:3001/usuarios/transferencias';
-    console.log(url);
     let res = await fetch(url,
         {
             method: 'POST',
@@ -231,15 +215,13 @@ async function postTransferencia(transferencia) {
             },
             body: JSON.stringify(transferencia)
         })
-    //console.log(deposito);
-    let resjson = await res.json();
-    //console.log(depositojson);
-    if (resjson) {
-        console.log('tomá!');
+    if (res.status === 200) {
+        let resjson = await res.json();
         return resjson;
-    } else {
-        console.log('hubo un error');
+    } else if (res.status === 201) {
         mostrarErrorTransferencia();
+    } else {
+        mostrarErrorTransferenciaNoUsuario();
     }
 }
 
@@ -247,7 +229,6 @@ async function sendtransferencia(event) {
     event.preventDefault();
     const transferencia = getTransferencia();
     let res = await postTransferencia(transferencia);
-    //console.log(res);
     let saldoUsuario = res.saldoEmisor;
     let form = document.getElementById('formularioTransferencias');
     form.reset();
@@ -275,14 +256,15 @@ function mostrarErrorTransferencia() {
     document.getElementById('mensajeTransferencia').style.display = 'block';
 }
 
-
-
-
-
-
-
-
-
+function mostrarErrorTransferenciaNoUsuario() {
+    let msjExito = document.createElement('div');
+    msjExito.className = 'msjExito';
+    msjExito.innerHTML = 'El usuario receptor no está registrado en este banco'
+    let mensajeTransferencia = document.getElementById('mensajeTransferencia');
+    mensajeTransferencia.insertAdjacentElement('afterbegin', msjExito);
+    document.getElementById('formularioTransferencias').style.display = 'none';
+    document.getElementById('mensajeTransferencia').style.display = 'block';
+}
 
 function volverARecienLogueado() {
     document.getElementById('mensajeDeposito').style.display = 'none';
