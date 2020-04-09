@@ -3,7 +3,7 @@ const port = 3001;
 const mongoose = require('mongoose');
 const db = mongoose.connection;
 mongoose.connect(
-    'mongodb://localhost:27017/acamica',
+    'mongodb+srv://homebanking:vivaperon@cluster0-aho4n.gcp.mongodb.net/homebanking?retryWrites=true&w=majority',
     {
         useNewUrlParser: true,
         useUnifiedTopology: true

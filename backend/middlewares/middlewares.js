@@ -1,36 +1,39 @@
-//let usuarios = require("../usuarios.json");
 const jwt = require('jsonwebtoken');
 const firma = require("../firma.json");
-
-
+const Usuarios = require('../models/models')
 
 function verificarUsuario(req, res, next) {
     const nombreUsuario = req.body.usuario;
-    const usuario = usuarios.find(element => element.usuario === nombreUsuario);
-    if (!usuario) {
-        next();
-    } else {
-        res.status(404).send("Usuario ya existe, elegi otro");
-    }
+    Usuarios.findOne({ 'usuario': nombreUsuario })
+        .then((nombreUsuario) => {
+            if (!nombreUsuario) {
+                next();
+            } else {
+                res.status(404).send("Usuario ya existe, elegi otro");
+            }
+        })
 }
 
 function logIn(req, res, next) {
     const nombreUsuario = req.body.usuario;
     const passwordRequerida = parseInt(req.body.password);
-    const usuario = usuarios.find(element => element.usuario === nombreUsuario && element.password === passwordRequerida);
-    if (usuario) {
-        let contenido = { usuario: nombreUsuario };
-        let token = jwt.sign(contenido, firma);
-        req.token = { token: token };
-        next();
-    } else {
-        res.status(401).send("Algunos de los datos no son correctos");
-    }
+    Usuarios.find({'usuario': nombreUsuario , 'usuario' : passwordRequerida})
+    .then((user) => {
+        if (user) {
+            let contenido = { usuario: nombreUsuario };
+            console.log(firma)
+            let token = jwt.sign(contenido, firma.firma);
+            req.token = { token: token };
+            next();
+        } else {
+            res.status(401).send("Algunos de los datos no son correctos");
+        }
+    })
 }
 
 function getUserFromReq(req) {
     const token = req.headers.authorization.split(' ')[1];
-    const decodificado = jwt.verify(token, firma);
+    const decodificado = jwt.verify(token, firma.firma);
     return decodificado.usuario
 }
 
@@ -77,5 +80,6 @@ module.exports = {
     logIn,
     tokenValido,
     sonUsuarios,
-    tieneSaldo
+    tieneSaldo,
+    Usuarios
 };
