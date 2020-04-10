@@ -43,25 +43,21 @@ function postLogin(req, res) {
     res.status(200).json(req.token);
 }
 
-function getUserFromDB(usuario) {
-    Usuarios.find({'usuario': usuario})
-    .then((user) => {
-        //console.log(user)
-        return user
-    })
-}
+
 
 function postDeposito(req, res) {
     usuarioSalidoDelToken = req.usuario;
     const monto = parseInt(req.body.monto);
-    let usuario = getUserFromDB(usuarioSalidoDelToken);
-    console.log(usuario)
-    usuario.saldo = parseInt(usuario.saldo) + monto;
-    usuario.save()
-    .then((usuario) => {
-        let enviar = JSON.stringify({ saldo: usuario.saldo });
-        res.status(200).send(enviar);
-    })
+    Usuarios.findOne({ 'usuario': usuarioSalidoDelToken })
+        .then((resultado) => {
+            resultado.saldo = parseInt(resultado.saldo) + monto;
+            resultado.save()
+                .then((usuario) => {
+                    console.log(usuario);
+                    let enviar = JSON.stringify({ saldo: usuario.saldo });
+                    res.status(200).send(enviar);
+                })
+        })
 }
 function postTransferencia(req, res) {
     let usuarioEmisor = req.usuarioEmisor;
@@ -69,8 +65,13 @@ function postTransferencia(req, res) {
 
     let monto = parseInt(req.body.monto);
     usuarioEmisor.saldo = parseInt(usuarioEmisor.saldo) - monto;
+    usuarioEmisor.save().then((resultado)=>{
+        console.log(resultado.saldo);
+    })
     usuarioReceptor.saldo = parseInt(usuarioReceptor.saldo) + monto;
-
+    usuarioReceptor.save().then((resultado)=>{
+        console.log(resultado.saldo);
+    })
     res.status(200).send(JSON.stringify({
         saldoEmisor: usuarioEmisor.saldo,
         saldoReceptor: usuarioReceptor.saldo

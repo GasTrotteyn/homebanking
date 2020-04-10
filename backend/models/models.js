@@ -7,7 +7,7 @@ const usuario = new Schema({
     dni: Number,
     usuario: String,
     password: Number,
-    saldo: Number,
+    saldo: {type: Number, default: 0},
     cuenta: [
         {
             tipoDeCuenta: String,

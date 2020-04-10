@@ -17,30 +17,32 @@ function verificarUsuario(req, res, next) {
 function logIn(req, res, next) {
     const nombreUsuario = req.body.usuario;
     const passwordRequerida = parseInt(req.body.password);
-    Usuarios.find({'usuario': nombreUsuario , 'usuario' : passwordRequerida})
-    .then((user) => {
-        if (user) {
-            let contenido = { usuario: nombreUsuario };
-            console.log(firma)
-            let token = jwt.sign(contenido, firma.firma);
-            req.token = { token: token };
-            next();
-        } else {
-            res.status(401).send("Algunos de los datos no son correctos");
-        }
-    })
+    Usuarios.find({ usuario: nombreUsuario, password: passwordRequerida })
+        .then((user) => {
+            if (user) {
+                let contenido = { usuario: nombreUsuario };
+                //console.log(firma)
+                let token = jwt.sign(contenido, firma);
+                req.token = { token: token };
+                next();
+            } else {
+                res.status(401).send("Algunos de los datos no son correctos");
+            }
+        })
 }
 
 function getUserFromReq(req) {
     const token = req.headers.authorization.split(' ')[1];
-    const decodificado = jwt.verify(token, firma.firma);
+    const decodificado = jwt.verify(token, firma);
     return decodificado.usuario
 }
+
+
 
 function tokenValido(req, res, next) {
     const usuario = getUserFromReq(req);
     if (usuario) {
-        console.log('tomá!');
+        console.log('pasó el middleware tokenValido');
         req.usuario = usuario;
         next();
     } else {
@@ -48,24 +50,43 @@ function tokenValido(req, res, next) {
     }
 }
 
+function getUserFromDB(usuario) {
+    Usuarios.find({ 'usuario': usuario })
+        .then((user) => {
+            //console.log(user)
+            return user
+        })
+}
+
 function sonUsuarios(req, res, next) {
     let emisor = req.body.usuario;
-    let usuarioEmisor = usuarios.find(element => element.usuario === emisor);
     let receptor = req.body.receptor;
-    let usuarioReceptor = usuarios.find(element => element.usuario === receptor);
-    if (usuarioEmisor && usuarioReceptor) {
-        req.usuarioEmisor = usuarioEmisor;
-
-        req.usuarioReceptor = usuarioReceptor;
-        next();
-    } else {
-        res.status(401).send("Alguno de los usuarios no es correcto");
-    }
+    Usuarios.findOne({ usuario: emisor })
+        .then((respuesta) => {
+            req.usuarioEmisor = respuesta;
+            Usuarios.findOne({ usuario: receptor })
+                .then((respuesta) => {
+                    req.usuarioReceptor = respuesta;
+                    if (req.usuarioEmisor && req.usuarioReceptor) {
+                        next();
+                    } else {
+                        console.log('alguno de los dos no es usuario');
+                        res.status(401).send('alguno de los dos no es usuario')
+                    }
+                }).catch((error) => {
+                    res.status(500).send("error de conexión");
+                });
+        }).catch((error) => {
+            res.status(500).send("error de conexión");
+        });
 }
+
+
 
 function tieneSaldo(req, res, next) {
     usuarioEmisor = req.usuarioEmisor;
     let saldo = parseInt(usuarioEmisor.saldo);
+    console.log(saldo);
     let monto = parseInt(req.body.monto);
     if (saldo > monto) {
         req.monto = monto;
@@ -81,5 +102,4 @@ module.exports = {
     tokenValido,
     sonUsuarios,
     tieneSaldo,
-    Usuarios
 };
