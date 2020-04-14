@@ -13,18 +13,14 @@
 
 <body>
     <h1>SocioS Bank</h1>
-
     <div class="portada" id="portada">
         <h2>BIENVENIDOS AL MEJOR BANCO DEL MUNDO</h2>
         <h3>DONDE TU DINERO VALE MUCHO MÁS</h3>
-
         <h3>Empecemos...</h3>
         <div class="botones" id="botones">
-            <button class="boton" id="ingresar">INGRESAR</button>
-
+            <button class="boton" id="ingresar">LOGIN</button>
             <button class="boton" id="registrar">REGISTRARME</button>
         </div>
-
     </div>
 
     <div class="formularios" id="registro">
@@ -44,16 +40,16 @@
     </div>
     <div id="mensajeRegistro" class="mensajes">
         <button class="boton" id="salir" onclick="window.location.href = 'index.html'">SALIR</button>
-        <button class="boton" id="registrarme">REGISTRARME</button>
+        <button class="boton" id="ingresar2">LOGIN</button>
     </div>
     <div class="formularios" id="formularioIngresar">
         <form id="formularioLogin">
             <h5>Ya es usuario? </h5>
             <h2>Hágale al loguín!</h2>
             <label for="usuario">Usuario:</label>
-            <input type="text" name="usuario" id="usuarioLogin">
+            <input type="text" name="usuario" id="usuarioLogin" required>
             <label for="password">Password:</label>
-            <input type="password" name="password" id="passwordLogin">
+            <input type="password" name="password" id="passwordLogin" required>
             <input type="submit" value="Enviar">
         </form>
         <div class="mensajes" id="mensajeLogin"></div>
@@ -67,26 +63,28 @@
             <h5>En la casa se la van a encontrar los pibes... </h5>
             <h2>Deposite</h2>
             <label for="montoDepositado">Monto:</label>
-            <input type="number" name="montoDepositado" id="montoDepositado">
+            <input type="number" name="montoDepositado" id="montoDepositado" min="1">
             <input type="submit" value="Enviar" id="enviarDeposito">
         </form>
     </div>
     <div class="mensajes" id="mensajeDeposito">
     </div>
-    <input type="submit" value="Volver" id="btnDepositoSalir" class="btnDepositarVolver">
     <div class="formularios" id="ventanaTransferencias">
         <form id="formularioTransferencias">
             <h5>estemmm... </h5>
             <h2>Transferencias</h2>
             <label for="usuarioReceptor">Usuario que recibe:</label>
-            <input type="text" name="usuarioReceptor" id="usuarioReceptor">
+            <input type="text" name="usuarioReceptor" id="usuarioReceptor" required>
             <label for="montoTransferido">monto:</label>
-            <input type="number" name="montoTransferido" id="montoTransferido">
+            <input type="number" name="montoTransferido" id="montoTransferido" min="1">
             <input type="submit" value="Enviar" id="enviarTransferencia">
         </form>
         <div class="mensajes" id="mensajeTransferencia"></div>
     </div>
-    <input type="submit" value="Volver" id="btnTransferenciaSalir" class="btnDepositarVolver">
+    
+    <button class="inicio" id="volverInicio" onclick="window.location.href = 'index.html'">VOLVER AL INICIO</button>
+    <button id="btnDepositoSalir" class="inicio" >VOLVER</button>
+    <button id="btnTransferenciaSalir" class="inicio" >VOLVER</button>
 </body>
 ​
 

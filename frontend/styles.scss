@@ -98,7 +98,7 @@ h3{
     display: none;
 }
 .titulo{
-    border: 5px solid rgb(97, 5, 5); 
+    border: 5px solid rgb(97, 5, 5);
     background-color: rgba(245, 90, 124, 0.637);
     width: 100%;
     height: 70px;
@@ -110,4 +110,15 @@ h3{
     display: none;
     width: 200px;
     height: 100px;
+}
+.inicio{
+    display: none;
+    background-color: rgb(218, 248, 109);
+            color: black;
+            font-weight: bolder;
+            height: 50px;
+            width: 150px;
+            &:hover{
+                cursor: pointer;
+            }
 }

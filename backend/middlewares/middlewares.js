@@ -17,13 +17,15 @@ function verificarUsuario(req, res, next) {
 function logIn(req, res, next) {
     const nombreUsuario = req.body.usuario;
     const passwordRequerida = parseInt(req.body.password);
-    Usuarios.find({ usuario: nombreUsuario, password: passwordRequerida })
+    Usuarios.findOne({ usuario: nombreUsuario, password: passwordRequerida })
         .then((user) => {
             if (user) {
+                console.log(user);
                 let contenido = { usuario: nombreUsuario };
                 //console.log(firma)
                 let token = jwt.sign(contenido, firma);
                 req.token = { token: token };
+                console.log('pasó el middleware de login');
                 next();
             } else {
                 res.status(401).send("Algunos de los datos no son correctos");
@@ -92,7 +94,7 @@ function tieneSaldo(req, res, next) {
         req.monto = monto;
         next();
     } else {
-        res.status(201).send("No te alcanza cariño");
+        res.status(203).send("No te alcanza cariño");
     }
 }
 

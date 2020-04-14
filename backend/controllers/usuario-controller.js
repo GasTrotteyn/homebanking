@@ -3,16 +3,10 @@ const Usuarios = require('../models/models');
 function postUsuario(req, res) {
     const nuevoUsuario = req.body;
     objetoUsuario = new Usuarios(nuevoUsuario);
-    objetoUsuario.save()
-        .then(async function (objetoUsuario) {
-            objetoUsuario_id = objetoUsuario.dni;
-            await objetoUsuario.save()
-            console.log(objetoUsuario_id)
-            res.status(200).send()
-        })
-        .catch((error) => {
-            res.status(500).send()
-        })
+    objetoUsuario.save().then(function (respuesta) {
+        console.log(respuesta);
+        res.status(201).send()
+    })
 }
 
 function getUsuarios(req, res) {
@@ -65,11 +59,11 @@ function postTransferencia(req, res) {
 
     let monto = parseInt(req.body.monto);
     usuarioEmisor.saldo = parseInt(usuarioEmisor.saldo) - monto;
-    usuarioEmisor.save().then((resultado)=>{
+    usuarioEmisor.save().then((resultado) => {
         console.log(resultado.saldo);
     })
     usuarioReceptor.saldo = parseInt(usuarioReceptor.saldo) + monto;
-    usuarioReceptor.save().then((resultado)=>{
+    usuarioReceptor.save().then((resultado) => {
         console.log(resultado.saldo);
     })
     res.status(200).send(JSON.stringify({

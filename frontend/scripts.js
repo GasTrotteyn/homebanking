@@ -19,13 +19,15 @@ async function postUsusario(usuario) {
         body: JSON.stringify(usuario)
     })
         .then(function (res) {
-            return res.json()
+            if(res.status ===201){
+                mostrarExitoRegistro();
+            }else{
+                mostrarUsuarioYaExiste();
+            }
         })
-        .then(function (res) {
-            mostrarExitoRegistro();
-        })
-        .catch(function (res) {
-            mostrarUsuarioYaExiste();
+        .catch(function (err){
+            alert('falla de conexión');
+            console.log(err);
         })
 };
 
@@ -36,8 +38,9 @@ function mostrarExitoRegistro() {
     let mensajeRegistro = document.getElementById('mensajeRegistro');
     mensajeRegistro.style.display = 'block';
     document.getElementById('registro').style.display = 'none';
-    mensajeRegistro.appendChild(msjExito);
+    mensajeRegistro.insertAdjacentElement('afterbegin', msjExito);
 }
+
 
 function mostrarUsuarioYaExiste() {
     let msjYaExiste = document.createElement('div');
@@ -111,6 +114,9 @@ function mostrarExitoLogin() {
     msjExito.innerHTML = 'Usted se ha logueado correctamante!'
     let mensajeLogin = document.getElementById('mensajeLogin');
     mensajeLogin.insertAdjacentElement('afterbegin', msjExito);
+    let btnVolverInicio = document.getElementById('volverInicio');
+    btnVolverInicio.innerHTML = 'CERRAR SESIÓN';
+    btnVolverInicio.style.display = 'block';
 
     document.getElementById('formularioLogin').style.display = 'none';
     document.getElementById('btnsLogin').style.display = 'block';
@@ -140,7 +146,7 @@ function getDeposito() {
 }
 
 async function postDeposito(montoDeposito) {
-    let url = 'http://localhost:3001/usuarios/' + usuarioLogueadoActual + '/depositos';
+    let url = 'http://localhost:3001/usuarios/depositos';
     let deposito = await fetch(url,
         {
             method: 'POST',
@@ -218,7 +224,7 @@ async function postTransferencia(transferencia) {
     if (res.status === 200) {
         let resjson = await res.json();
         return resjson;
-    } else if (res.status === 201) {
+    } else if (res.status === 203) {
         mostrarErrorTransferencia();
     } else {
         mostrarErrorTransferenciaNoUsuario();
@@ -251,6 +257,7 @@ function mostrarErrorTransferencia() {
     msjExito.className = 'msjExito';
     msjExito.innerHTML = 'No te da el cuero papu'
     let mensajeTransferencia = document.getElementById('mensajeTransferencia');
+    mensajeTransferencia.innerHTML = '';
     mensajeTransferencia.insertAdjacentElement('afterbegin', msjExito);
     document.getElementById('formularioTransferencias').style.display = 'none';
     document.getElementById('mensajeTransferencia').style.display = 'block';
@@ -261,6 +268,7 @@ function mostrarErrorTransferenciaNoUsuario() {
     msjExito.className = 'msjExito';
     msjExito.innerHTML = 'El usuario receptor no está registrado en este banco'
     let mensajeTransferencia = document.getElementById('mensajeTransferencia');
+    mensajeTransferencia.innerHTML = '';
     mensajeTransferencia.insertAdjacentElement('afterbegin', msjExito);
     document.getElementById('formularioTransferencias').style.display = 'none';
     document.getElementById('mensajeTransferencia').style.display = 'block';
@@ -270,8 +278,14 @@ function volverARecienLogueado() {
     document.getElementById('mensajeDeposito').style.display = 'none';
     document.getElementById('btnsLogin').style.display = 'block';
     document.getElementById('btnDepositoSalir').style.display = 'none';
+    document.getElementById('btnTransferenciaSalir').style.display = 'none';
     document.getElementById('ventanaDeposito').style.display = 'none';
     document.getElementById('ventanaTransferencias').style.display = 'none';
+}
+
+function volverInicio(){
+    token = '';
+
 }
 
 ////funciones de display /////////////
@@ -279,12 +293,18 @@ function volverARecienLogueado() {
 function ingresarApp() {
     let portada = document.getElementById('portada');
     let formularioLogin = document.getElementById('formularioIngresar');
+    let mensajeRegistro = document.getElementById('mensajeRegistro');
+    let btnVolverInicio = document.getElementById('volverInicio');
+    btnVolverInicio.style.display = 'block';
     portada.style.display = 'none';
-    formularioLogin.style.display = 'block'
+    formularioLogin.style.display = 'block';
+    mensajeRegistro.style.display = 'none'
 }
 function registrarse() {
     let portada = document.getElementById('portada');
     let formRegistro = document.getElementById('registro');
+    let btnVolverInicio = document.getElementById('volverInicio');
+    btnVolverInicio.style.display = 'block';
     portada.style.display = 'none';
     formRegistro.style.display = 'block';
     document.getElementById('mensajeRegistro').style.display = 'none';
@@ -308,14 +328,15 @@ function eventos() {
     document.getElementById('formularioRegistro').addEventListener('submit', sendForm);
     document.getElementById('formularioLogin').addEventListener('submit', sendLogin);
     document.getElementById('ingresar').addEventListener('click', ingresarApp);
+    document.getElementById('ingresar2').addEventListener('click', ingresarApp);
     document.getElementById('registrar').addEventListener('click', registrarse);
     document.getElementById('depositar').addEventListener('click', depositar);
     document.getElementById('transferir').addEventListener('click', transferir);
-    document.getElementById('registrarme').addEventListener('click', registrarse);
     document.getElementById('enviarDeposito').addEventListener('click', sendDeposito);
     document.getElementById('btnDepositoSalir').addEventListener('click', volverARecienLogueado);
     document.getElementById('btnTransferenciaSalir').addEventListener('click', volverARecienLogueado);
     document.getElementById('enviarTransferencia').addEventListener('click', sendtransferencia);
+    document.getElementById('volverInicio').addEventListener('click', volverInicio)
 };
 
 function cargaPagina() {

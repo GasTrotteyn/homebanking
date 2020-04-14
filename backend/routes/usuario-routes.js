@@ -5,7 +5,7 @@ const api = express.Router();
 
 api.post("/",middlewares.verificarUsuario, UsuarioController.postUsuario);
 api.post("/login", middlewares.logIn, UsuarioController.postLogin);
-api.post("/:usuario/depositos", middlewares.tokenValido, UsuarioController.postDeposito);
+api.post("/depositos", middlewares.tokenValido, UsuarioController.postDeposito);
 api.post(
     "/transferencias", middlewares.tokenValido,
     middlewares.sonUsuarios,

@@ -160,4 +160,17 @@ h3 {
   width: 200px;
   height: 100px;
 }
+
+.inicio {
+  display: none;
+  background-color: #daf86d;
+  color: black;
+  font-weight: bolder;
+  height: 50px;
+  width: 150px;
+}
+
+.inicio:hover {
+  cursor: pointer;
+}
 /*# sourceMappingURL=styles.css.map */
