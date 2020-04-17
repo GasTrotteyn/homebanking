@@ -19,6 +19,7 @@ async function postUsusario(usuario) {
         body: JSON.stringify(usuario)
     })
         .then(function (res) {
+            //console.log(res)
             if(res.status ===201){
                 mostrarExitoRegistro();
             }else{
@@ -34,7 +35,7 @@ async function postUsusario(usuario) {
 function mostrarExitoRegistro() {
     let msjExito = document.createElement('div');
     msjExito.className = 'mjeExito';
-    msjExito.innerHTML = 'Usted se ha registrado correctamante!'
+    msjExito.innerHTML = 'Usted se ha registrado correctamante!';
     let mensajeRegistro = document.getElementById('mensajeRegistro');
     mensajeRegistro.style.display = 'block';
     document.getElementById('registro').style.display = 'none';
@@ -73,7 +74,7 @@ function getLogin() {
     const password = document.getElementById('passwordLogin').value;
     return {
         usuario: usuario,
-        password: password
+        password: password,
     }
 }
 
@@ -91,10 +92,13 @@ function postLogin(usuarioLogueado) {
         })
         .then(async function (res) {
             if (res.status === 200) {
-                usuarioLogueadoActual = usuarioLogueado.usuario;
-                token = await res.json();
-                mostrarExitoLogin();
-            } else {
+                //console.log(res)
+                usuarioLogueadoActual = usuarioLogueado;
+                let datosUsuario = await res.json();
+                token = datosUsuario.token;
+                //console.log(usuarioLogueadoActual)
+                mostrarExitoLogin(datosUsuario.saldo);
+            }else{
                 mostrarErrorLogin();
             }
         })
@@ -103,15 +107,15 @@ function postLogin(usuarioLogueado) {
 async function sendLogin(event) {
     event.preventDefault();
     const usuarioLogueado = getLogin();
-    await postLogin(usuarioLogueado);
+    let res = await postLogin(usuarioLogueado);
     let form = document.getElementById('formularioLogin');
     form.reset();
 }
 
-function mostrarExitoLogin() {
+function mostrarExitoLogin(saldo) {
     let msjExito = document.createElement('div');
     msjExito.className = 'msjExito';
-    msjExito.innerHTML = 'Usted se ha logueado correctamante!'
+    msjExito.innerHTML = `Usuario logueado con éxito, su saldo es $ ${saldo} <br> ¿Qué desea realizar?`;
     let mensajeLogin = document.getElementById('mensajeLogin');
     mensajeLogin.insertAdjacentElement('afterbegin', msjExito);
     let btnVolverInicio = document.getElementById('volverInicio');
@@ -202,14 +206,14 @@ function getTransferencia() {
     const montoTransferido = document.getElementById('montoTransferido').value;
     const ususarioReceptor = document.getElementById('usuarioReceptor').value;
     return {
-        usuario: usuarioLogueadoActual,
+        usuario: usuarioLogueadoActual.usuario,
         monto: montoTransferido,
         receptor: ususarioReceptor
     }
 }
 
 async function postTransferencia(transferencia) {
-
+    console.log(transferencia);
     let url = 'http://localhost:3001/usuarios/transferencias';
     let res = await fetch(url,
         {
@@ -235,6 +239,7 @@ async function sendtransferencia(event) {
     event.preventDefault();
     const transferencia = getTransferencia();
     let res = await postTransferencia(transferencia);
+    console.log(res);
     let saldoUsuario = res.saldoEmisor;
     let form = document.getElementById('formularioTransferencias');
     form.reset();

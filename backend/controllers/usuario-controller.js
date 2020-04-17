@@ -34,10 +34,13 @@ function getUser(req, res) {
 */
 
 function postLogin(req, res) {
-    res.status(200).json(req.token);
+    usuario = {
+        token: req.token,
+        saldo: req.saldo,
+    }
+    console.log(usuario)
+    res.status(200).json(usuario);
 }
-
-
 
 function postDeposito(req, res) {
     usuarioSalidoDelToken = req.usuario;
