@@ -20,11 +20,11 @@ function logIn(req, res, next) {
     Usuarios.findOne({ usuario: nombreUsuario, password: passwordRequerida })
         .then((user) => {
             if (user) {
-                console.log(user);
                 let contenido = { usuario: nombreUsuario };
                 //console.log(firma)
                 let token = jwt.sign(contenido, firma);
                 req.token = { token: token };
+                req.saldo = user.saldo;
                 console.log('pasó el middleware de login');
                 next();
             } else {
